@@ -1,145 +1,684 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sivaldo | Software & DevOps Engineer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <title>Sivaldo | Portfolio - DevOps & Network Engineer</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(17, 24, 39, 0.7);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --primary: #3b82f6;      /* Azul DevOps */
+            --secondary: #10b981;    /* Verde Sucesso/Ativo */
+            --accent: #8b5cf6;       /* Roxo Redes */
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --terminal-bg: #111827;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.1) 0px, transparent 50%);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphic Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header / Navbar */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 3rem;
+        }
+
+        .logo {
+            font-family: 'Fira Code', monospace;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+        }
+
+        .social-links a {
+            color: var(--text-muted);
+            font-size: 1.35rem;
+            margin-left: 1.5rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Hero Section */
+        .hero {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 2rem;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hero-text h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-main) 30%, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text p {
+            color: var(--text-muted);
+            font-size: 1.125rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .badge {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Terminal Component */
+        .terminal {
+            background-color: var(--terminal-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            overflow: hidden;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+
+        .terminal-header {
+            background-color: rgba(255, 255, 255, 0.03);
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .terminal-buttons {
+            display: flex;
+            gap: 6px;
+        }
+
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .btn-red { background-color: #ef4444; }
+        .btn-yellow { background-color: #f59e0b; }
+        .btn-green { background-color: #10b981; }
+
+        .terminal-title {
+            margin-left: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .terminal-body {
+            padding: 1.25rem;
+            height: 250px;
+            overflow-y: auto;
+            color: #10b981;
+        }
+
+        .terminal-output {
+            margin-bottom: 0.5rem;
+            white-space: pre-wrap;
+        }
+
+        .terminal-line {
+            display: flex;
+            align-items: center;
+        }
+
+        .terminal-prompt {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+
+        .terminal-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-main);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+
+        /* Sandbox & Topology Section */
+        .sandbox-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 4rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        /* Topology Visualizer */
+        .topology-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            margin-top: 1.5rem;
+            overflow: hidden;
+        }
+
+        @media (max-width: 640px) {
+            .topology-container {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+
+        .node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 2;
+            width: 100px;
+            text-align: center;
+        }
+
+        .node-icon {
+            width: 60px;
+            height: 60px;
+            background: #1e293b;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .node.active .node-icon {
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .node.success .node-icon {
+            border-color: var(--secondary);
+            color: var(--secondary);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .node-label {
+            font-size: 0.8rem;
+            font-family: 'Fira Code', monospace;
+            color: var(--text-muted);
+        }
+
+        .node.active .node-label, .node.success .node-label {
+            color: var(--text-main);
+        }
+
+        /* Connector Lines */
+        .connector-line {
+            position: absolute;
+            height: 2px;
+            background: var(--border-color);
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+            transition: background 0.3s ease;
+        }
+
+        #line1 { left: 15%; width: 23%; }
+        #line2 { left: 48%; width: 23%; }
+        #line3 { left: 81%; width: 10%; }
+
+        @media (max-width: 640px) {
+            .connector-line { display: none; }
+        }
+
+        .connector-line.active {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Pulse Animation Overlay */
+        .pulse-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--secondary);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            display: none;
+            z-index: 3;
+            box-shadow: 0 0 10px var(--secondary);
+        }
+
+        /* Control Panel */
+        .control-panel {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-simulate {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-simulate:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .status-badge {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .status-badge span {
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        /* Grid of Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .project-header i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .project-link {
+            color: var(--text-muted);
+            transition: color 0.2s;
+        }
+
+        .project-link:hover {
+            color: var(--primary);
+        }
+
+        .project-card h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .project-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen selection:bg-emerald-500 selection:text-slate-950">
+<body>
 
-    <header class="border-b border-slate-900 bg-slate-950/80 backdrop-blur sticky top-0 z-50">
-        <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-            <span class="text-emerald-400 font-bold tracking-wider text-lg">ENG. SIVALDO</span>
-            <nav class="space-x-6 text-sm text-slate-400">
-                <a href="#sobre" class="hover:text-emerald-400 transition">Sobre</a>
-                <a href="#sandbox" class="hover:text-emerald-400 transition">Sandbox</a>
-                <a href="#habilidades" class="hover:text-emerald-400 transition">Habilidades</a>
-            </nav>
-        </div>
-    </header>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">sivaldo@devops:~$</div>
+            <div class="social-links">
+                <a href="https://github.com/EngSivaldo" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:seu-email@provedor.com"><i class="fas fa-envelope"></i></a>
+            </div>
+        </header>
 
-    <section class="max-w-5xl mx-auto px-6 py-20 md:py-32 flex flex-col justify-center">
-        <p class="text-emerald-400 font-semibold mb-3 tracking-wide text-sm uppercase">Olá, eu sou o Sivaldo</p>
-        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-none mb-6">
-            Construindo pontes entre o <br class="hidden md:inline">
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Desenvolvimento e a Infraestrutura</span>.
-        </h1>
-        <p class="text-slate-400 text-lg md:text-xl max-w-2xl mb-8 leading-relaxed">
-            Sou Engenheiro de Software focado em criar sistemas robustos, automatizar processos de entrega (CI/CD) e gerenciar redes de servidores Linux de forma segura.
-        </p>
-        <div class="flex gap-4">
-            <a href="#sandbox" class="bg-emerald-500 text-slate-950 px-6 py-3 rounded-lg font-semibold hover:bg-emerald-400 transition text-center shadow-lg shadow-emerald-500/20">
-                Ver Laboratório Ativo
-            </a>
-            <a href="https://github.com/EngSivaldo" target="_blank" class="border border-slate-800 hover:border-slate-700 px-6 py-3 rounded-lg font-semibold transition text-center">
-                Meu GitHub
-            </a>
-        </div>
-    </section>
-
-    <section id="sandbox" class="border-t border-slate-900 bg-slate-900/30 py-20">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
-                <div>
-                    <span class="text-emerald-400 font-semibold text-sm uppercase tracking-wider">Estudo de Caso Ativo</span>
-                    <h2 class="text-3xl font-bold text-white mt-1">Network Routing & Apache Sandbox</h2>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-text">
+                <h1>Engenheiro de Redes & DevOps</h1>
+                <p>Especializado na criação de infraestruturas resilientes, automação de deploys com WSL, Docker, e monitoramento de ambientes de alta escalabilidade.</p>
+                
+                <div class="badge-container">
+                    <span class="badge"><i class="fab fa-linux"></i> WSL/Linux</span>
+                    <span class="badge"><i class="fab fa-docker"></i> Docker</span>
+                    <span class="badge"><i class="fas fa-network-wired"></i> TCP/IP</span>
+                    <span class="badge"><i class="fab fa-python"></i> Python</span>
+                    <span class="badge"><i class="fas fa-server"></i> Nginx</span>
                 </div>
-                <span class="mt-4 md:mt-0 px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-full text-xs font-semibold border border-emerald-500/20">
-                    Infraestrutura Realizada
-                </span>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="space-y-6">
-                    <p class="text-slate-400 leading-relaxed">
-                        Este portfólio não está rodando apenas na nuvem pública. Ele nasceu dentro de um <strong>Laboratório de Redes Privadas (Homelab)</strong> simulado localmente.
-                    </p>
-                    <p class="text-slate-400 leading-relaxed">
-                        Configurei um servidor <strong>Debian</strong> como Gateway/Roteador físico ligando a rede externa (Bridge) a uma rede interna protegida. Nela, o servidor <strong>Ubuntu</strong> hospeda esta aplicação via <strong>Apache Multi-Site (Virtual Hosts)</strong>, sem exposição direta à internet.
-                    </p>
-                    <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-800 space-y-3 text-sm">
-                        <div class="flex items-center gap-2 text-emerald-400 font-semibold">
-                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                            Destaques da Configuração:
-                        </div>
-                        <ul class="space-y-2 text-slate-300 list-disc list-inside">
-                            <li>Isolamento de Rede Interna (Subrede <code class="text-emerald-300">10.200.0.0/24</code>)</li>
-                            <li>Debian Router com NAT e IP Forwarding ativo</li>
-                            <li>Deploy automatizado usando <strong>SSH Agent Forwarding</strong></li>
-                        </ul>
+            <!-- Terminal Component -->
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <div class="terminal-btn btn-red"></div>
+                        <div class="terminal-btn btn-yellow"></div>
+                        <div class="terminal-btn btn-green"></div>
                     </div>
+                    <span class="terminal-title">guest@sivaldo-portfolio:~</span>
                 </div>
-
-                <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 font-mono text-xs text-slate-400 shadow-2xl">
-                    <div class="flex items-center gap-2 mb-4 border-b border-slate-900 pb-3">
-                        <span class="w-3 h-3 rounded-full bg-red-500/60"></span>
-                        <span class="w-3 h-3 rounded-full bg-yellow-500/60"></span>
-                        <span class="w-3 h-3 rounded-full bg-green-500/60"></span>
-                        <span class="text-slate-500 text-[10px] ml-2">network-topology.map</span>
-                    </div>
-                    <div class="space-y-2">
-                        <p class="text-slate-500">// Fluxo de Conexão e Deploy Seguro</p>
-                        <p class="text-emerald-400">[WSL / Windows Local Host]</p>
-                        <p class="text-slate-600">   │  (SSH ProxyJump via IP Bridge: 192.168.0.200)</p>
-                        <p class="text-blue-400">   ▼</p>
-                        <p class="text-emerald-400">[Debian Router & NAT Gateway]</p>
-                        <p class="text-slate-600">   │  (Rede Interna Segura: 10.200.0.1)</p>
-                        <p class="text-blue-400">   ▼</p>
-                        <p class="text-emerald-400">[Ubuntu Server & Apache Webserver]</p>
-                        <p class="text-slate-500">      └─ Portfólio Ativo em: 10.200.0.100</p>
-                        <p class="text-slate-500">      └─ Git Push direto para o GitHub Pages via Agent</p>
+                <div class="terminal-body" id="terminal-body">
+                    <div class="terminal-output">Bem-vindo ao terminal interativo de Sivaldo!</div>
+                    <div class="terminal-output">Digite 'help' para ver os comandos disponíveis.</div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">sival@portifolio:~$</span>
+                        <input type="text" class="terminal-input" id="terminal-input" autofocus autocomplete="off">
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="habilidades" class="py-20 max-w-5xl mx-auto px-6">
-        <span class="text-emerald-400 font-semibold text-sm uppercase tracking-wider">Tecnologias Utilizadas</span>
-        <h2 class="text-3xl font-bold text-white mt-1 mb-12">Stack de Desenvolvimento & Operações</h2>
+        <!-- Laboratório Sandbox Interativo -->
+        <section class="sandbox-section">
+            <div class="section-title">
+                <i class="fas fa-microchip"></i>
+                <h2>Laboratório Sandbox (Topologia Interativa)</h2>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Clique no botão para simular um fluxo completo de tráfego, partindo de uma requisição web do cliente, batendo no Load Balancer e distribuindo o tráfego até o Banco de Dados!</p>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-slate-900/40 p-6 rounded-xl border border-slate-900 hover:border-slate-800 transition">
-                <h3 class="text-white font-bold text-lg mb-3 flex items-center gap-2">
-                    <span class="text-emerald-400">⚡</span> DevOps & Cloud
-                </h3>
-                <p class="text-slate-400 text-sm leading-relaxed">
-                    Git, GitHub Actions, SSH Key Forwarding (Ed25519), SSH Tunneling e WSL 2 como ambiente unificado.
-                </p>
-            </div>
-            <div class="bg-slate-900/40 p-6 rounded-xl border border-slate-900 hover:border-slate-800 transition">
-                <h3 class="text-white font-bold text-lg mb-3 flex items-center gap-2">
-                    <span class="text-emerald-400">🐧</span> Infra & Redes
-                </h3>
-                <p class="text-slate-400 text-sm leading-relaxed">
-                    Administração Linux (Debian/Ubuntu), roteamento NAT, criação de firewalls básicos e isolamento de redes internas.
-                </p>
-            </div>
-            <div class="bg-slate-900/40 p-6 rounded-xl border border-slate-900 hover:border-slate-800 transition">
-                <h3 class="text-white font-bold text-lg mb-3 flex items-center gap-2">
-                    <span class="text-emerald-400">🌐</span> Servidores Web
-                </h3>
-                <p class="text-slate-400 text-sm leading-relaxed">
-                    Instalação e otimização do Apache, configuração de múltiplos hosts virtuais (Virtual Hosts) e segurança de diretórios.
-                </p>
-            </div>
-        </div>
-    </section>
+            <div class="topology-container">
+                <div class="pulse-dot" id="pulse"></div>
 
-    <footer class="border-t border-slate-900 py-12 bg-slate-950">
-        <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500">
-            <p>© 2026 Sivaldo. Desenvolvido e implantado via infraestrutura local.</p>
-            <div class="flex gap-6 mt-4 md:mt-0">
-                <a href="https://github.com/EngSivaldo" target="_blank" class="hover:text-emerald-400 transition">GitHub</a>
-                <a href="mailto:seu_email@exemplo.com" class="hover:text-emerald-400 transition">Contato</a>
-            </div>
-        </div>
-    </footer>
+                <div class="node active" id="node-client">
+                    <div class="node-icon"><i class="fas fa-laptop-code"></i></div>
+                    <span class="node-label">Cliente (Você)</span>
+                </div>
 
+                <div class="connector-line" id="line1"></div>
+
+                <div class="node" id="node-lb">
+                    <div class="node-icon"><i class="fas fa-random"></i></div>
+                    <span class="node-label">Load Balancer (Nginx)</span>
+                </div>
+
+                <div class="connector-line" id="line2"></div>
+
+                <div class="node" id="node-app">
+                    <div class="node-icon"><i class="fas fa-cubes"></i></div>
+                    <span class="node-label">App Server (WSL)</span>
+                </div>
+
+                <div class="connector-line" id="line3"></div>
+
+                <div class="node" id="node-db">
+                    <div class="node-icon"><i class="fas fa-database"></i></div>
+                    <span class="node-label">PostgreSQL</span>
+                </div>
+            </div>
+
+            <div class="control-panel">
+                <button class="btn-simulate" onclick="startTrafficSimulation()">
+                    <i class="fas fa-play"></i> Simular Requisição HTTP
+                </button>
+                <div class="status-badge">
+                    Status da Rede: <span id="network-status">ONLINE / IDLE</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Projetos -->
+        <h2 style="margin-bottom: 1.5rem; font-size: 1.5rem;"><i class="fas fa-folder-open" style="color: var(--primary); margin-right: 0.5rem;"></i> Projetos Destacados</h2>
+        <section class="projects-grid">
+            <!-- Card 1 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <i class="fab fa-python"></i>
+                    <a href="https://github.com/EngSivaldo/sivaldo-portfolio" target="_blank" class="project-link"><i class="fab fa-github"></i></a>
+                </div>
+                <h3>Sivaldo Portfolio</h3>
+                <p>Este portfólio completo, simulando ambientes de terminal e automação de rede com layout responsivo e de alta fidelidade visual.</p>
+                <div class="badge-container" style="margin-bottom: 0;">
+                    <span class="badge">HTML5</span>
+                    <span class="badge">CSS3</span>
+                    <span class="badge">Vanilla JS</span>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <i class="fas fa-network-wired"></i>
+                    <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                </div>
+                <h3>WSL Dev Environment Automation</h3>
+                <p>Scripts Bash para provisionamento automatizado de ambientes locais com Docker, PostgreSQL e Nginx rodando em subsistema Linux.</p>
+                <div class="badge-container" style="margin-bottom: 0;">
+                    <span class="badge">Bash</span>
+                    <span class="badge">WSL2</span>
+                    <span class="badge">Docker</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 Sivaldo. Feito com orgulho de engenheiro.</p>
+            <p style="font-size: 0.75rem; color: rgba(255, 255, 255, 0.2);">Hosted via GitHub Pages</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript para Interatividades -->
+    <script>
+        // --- 1. CONFIGURAÇÃO DO TERMINAL INTERATIVO ---
+        const terminalBody = document.getElementById('terminal-body');
+        const terminalInput = document.getElementById('terminal-input');
+
+        const commands = {
+            help: "Comandos disponíveis:\n  - about: Breve descrição sobre mim\n  - skills: Minhas stacks de tecnologias\n  - ping: Testa a latência do host fictício\n  - clear: Limpa a tela do terminal",
+            about: "Sivaldo - Engenheiro DevOps que adora otimizar conexões de rede, gerenciar containers e rodar soluções elegantes via terminal WSL.",
+            skills: "Skills Cadastradas:\n- Redes: TCP/IP, Roteamento, Firewall, Nginx\n- DevOps: Docker, WSL2, Automação Bash\n- Dev: Python, HTML/CSS/JS",
+            ping: "PING sivaldo.devops (127.0.0.1): 56 data bytes\n64 bytes from 127.0.0.1: icmp_seq=0 ttl=64 time=0.124 ms\n64 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=0.089 ms\n\n--- sivaldo.devops ping statistics --- \n2 packets transmitted, 2 packets received, 0% packet loss"
+        };
+
+        terminalInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const commandText = this.value.trim().toLowerCase();
+                this.value = '';
+
+                // Cria o prompt da linha executada
+                const line = document.createElement('div');
+                line.className = 'terminal-output';
+                line.innerHTML = `<span class="terminal-prompt">sival@portifolio:~$</span> ${commandText}`;
+                
+                // Insere antes do input atual
+                terminalBody.insertBefore(line, terminalInput.parentNode);
+
+                if (commandText === 'clear') {
+                    // Limpa tudo e reinicia com o prompt
+                    const outputs = terminalBody.querySelectorAll('.terminal-output');
+                    outputs.forEach(o => o.remove());
+                } else if (commandText !== '') {
+                    // Retorna a resposta do comando
+                    const output = document.createElement('div');
+                    output.className = 'terminal-output';
+                    output.style.color = '#fff';
+                    output.innerText = commands[commandText] || `Comando não reconhecido: '${commandText}'. Digite 'help' para comandos úteis.`;
+                    terminalBody.insertBefore(output, terminalInput.parentNode);
+                }
+
+                // Scroll automático para manter visível o input
+                terminalBody.scrollTop = terminalBody.scrollHeight;
+            }
+        });
+
+        // --- 2. SIMULAÇÃO DE TRÁFEGO DO SANDBOX ---
+        let simulationInProgress = false;
+
+        async function startTrafficSimulation() {
+            if (simulationInProgress) return;
+            simulationInProgress = true;
+
+            const status = document.getElementById('network-status');
+            const nodes = {
+                client: document.getElementById('node-client'),
+                lb: document.getElementById('node-lb'),
+                app: document.getElementById('node-app'),
+                db: document.getElementById('node-db')
+            };
+            const lines = {
+                l1: document.getElementById('line1'),
+                l2: document.getElementById('line2'),
+                l3: document.getElementById('line3')
+            };
+
+            // Reset nodes
+            Object.values(nodes).forEach(node => node.classList.remove('active', 'success'));
+            Object.values(lines).forEach(line => line.classList.remove('active'));
+            nodes.client.classList.add('active');
+
+            // --- ESTÁGIO 1: Envio do Cliente ao Nginx ---
+            status.innerHTML = '<span>ENVIANDO REQUISIÇÃO...</span>';
+            await sleep(800);
+            lines.l1.classList.add('active');
+            nodes.lb.classList.add('active');
+
+            // --- ESTÁGIO 2: Nginx para App Server WSL ---
+            status.innerHTML = '<span>NGINX REDIRECIONANDO FLUXO...</span>';
+            await sleep(800);
+            lines.l2.classList.add('active');
+            nodes.app.classList.add('active');
+
+            // --- ESTÁGIO 3: Consulta ao DB PostgreSQL ---
+            status.innerHTML = '<span>CONSULTANDO BANCO DE DADOS...</span>';
+            await sleep(800);
+            lines.l3.classList.add('active');
+            nodes.db.classList.add('success');
+
+            // --- ESTÁGIO 4: Sucesso ---
+            status.innerHTML = '<span style="color: #10b981;">HTTP 200 OK (SUCESSO!)</span>';
+            
+            // Highlight final
+            Object.values(nodes).forEach(node => node.classList.add('success'));
+            
+            await sleep(3000);
+            
+            // Voltar para Idle
+            Object.values(nodes).forEach(node => node.classList.remove('active', 'success'));
+            Object.values(lines).forEach(line => line.classList.remove('active'));
+            nodes.client.classList.add('active');
+            status.innerHTML = 'ONLINE / IDLE';
+            simulationInProgress = false;
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+    </script>
 </body>
 </html>
